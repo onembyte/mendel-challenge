@@ -31,6 +31,17 @@
 			<artifactId>spring-boot-starter-validation-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--
+			Spring Boot 4 extracted classic RestTemplate support into its own
+			module. TestRestTemplate (used for real-HTTP integration tests) wraps
+			a RestTemplate, so it needs RestTemplateBuilder from this module, which
+			spring-boot-starter-webmvc (RestClient-based) no longer pulls in.
+		-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-restclient</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
