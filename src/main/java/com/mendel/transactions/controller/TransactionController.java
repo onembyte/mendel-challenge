@@ -30,6 +30,6 @@ public class TransactionController {
 
     @GetMapping("/types/{type}")
     public List<Long> byType(@PathVariable String type) {
-        throw new UnsupportedOperationException("not implemented yet");
+        return service.getIdsByType(type);
     }
 }

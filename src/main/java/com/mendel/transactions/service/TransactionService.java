@@ -3,6 +3,7 @@ package com.mendel.transactions.service;
 import com.mendel.transactions.dto.TransactionRequest;
 import com.mendel.transactions.model.Transaction;
 import com.mendel.transactions.repository.TransactionRepository;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,5 +28,10 @@ public class TransactionService {
         Transaction transaction =
                 new Transaction(id, request.amount(), request.type(), request.parentId());
         repository.upsert(transaction);
+    }
+
+    /** Ids of every transaction of the given type, sorted ascending (empty if none). */
+    public List<Long> getIdsByType(String type) {
+        return repository.findIdsByType(type);
     }
 }
