@@ -36,6 +36,6 @@ public class TransactionController {
 
     @GetMapping("/sum/{id}")
     public SumResponse sum(@PathVariable long id) {
-        throw new UnsupportedOperationException("not implemented yet");
+        return new SumResponse(service.sum(id));
     }
 }

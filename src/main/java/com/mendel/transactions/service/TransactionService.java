@@ -1,9 +1,14 @@
 package com.mendel.transactions.service;
 
 import com.mendel.transactions.dto.TransactionRequest;
+import com.mendel.transactions.exception.TransactionNotFoundException;
 import com.mendel.transactions.model.Transaction;
 import com.mendel.transactions.repository.TransactionRepository;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 
 /**
@@ -42,6 +47,31 @@ public class TransactionService {
      * @throws com.mendel.transactions.exception.TransactionNotFoundException if no transaction has the given id
      */
     public double sum(long id) {
-        throw new UnsupportedOperationException("not implemented yet");
+        if (!repository.existsById(id)) {
+            throw new TransactionNotFoundException(id);
+        }
+        double total = 0.0;
+        Deque<Long> pending = new ArrayDeque<>();
+        Set<Long> visited = new HashSet<>();
+        pending.push(id);
+        // Iterative DFS over the children index: no recursion (so arbitrarily deep
+        // chains are safe) and a visited set makes it robust to any cycle.
+        while (!pending.isEmpty()) {
+            long current = pending.pop();
+            if (!visited.add(current)) {
+                continue;
+            }
+            Transaction transaction = repository.findById(current).orElse(null);
+            if (transaction == null) {
+                continue;
+            }
+            total += transaction.amount();
+            for (long child : repository.childrenOf(current)) {
+                if (!visited.contains(child)) {
+                    pending.push(child);
+                }
+            }
+        }
+        return total;
     }
 }
