@@ -79,7 +79,8 @@ class PutTransactionIntegrationTest extends IntegrationTestBase {
 
         ResponseEntity<String> response = put(1, "{\"amount\": 100, \"type\": \"cars\", \"parent_id\": 1}");
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+        // 422; asserted numerically since Spring 7 renamed the constant to UNPROCESSABLE_CONTENT.
+        assertThat(response.getStatusCode().value()).isEqualTo(422);
     }
 
     @Test
@@ -91,7 +92,7 @@ class PutTransactionIntegrationTest extends IntegrationTestBase {
         // Re-point 10 under its own descendant 12 -> would create a cycle.
         ResponseEntity<String> response = put(10, "{\"amount\": 5000, \"type\": \"cars\", \"parent_id\": 12}");
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+        assertThat(response.getStatusCode().value()).isEqualTo(422);
         // The rejected update must not have mutated the stored graph.
         assertThat(repository.findById(10L).orElseThrow().parentId()).isNull();
     }
