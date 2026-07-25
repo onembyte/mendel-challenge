@@ -1,6 +1,7 @@
 package com.mendel.transactions.controller;
 
 import com.mendel.transactions.dto.StatusResponse;
+import com.mendel.transactions.dto.SumResponse;
 import com.mendel.transactions.dto.TransactionRequest;
 import com.mendel.transactions.service.TransactionService;
 import jakarta.validation.Valid;
@@ -31,5 +32,10 @@ public class TransactionController {
     @GetMapping("/types/{type}")
     public List<Long> byType(@PathVariable String type) {
         return service.getIdsByType(type);
+    }
+
+    @GetMapping("/sum/{id}")
+    public SumResponse sum(@PathVariable long id) {
+        throw new UnsupportedOperationException("not implemented yet");
     }
 }

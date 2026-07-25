@@ -34,4 +34,14 @@ public class TransactionService {
     public List<Long> getIdsByType(String type) {
         return repository.findIdsByType(type);
     }
+
+    /**
+     * Total amount of the transaction and all transactions transitively linked to
+     * it through {@code parent_id} (its subtree).
+     *
+     * @throws com.mendel.transactions.exception.TransactionNotFoundException if no transaction has the given id
+     */
+    public double sum(long id) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
 }
