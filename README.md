@@ -11,6 +11,9 @@ with everything transitively linked to it through `parent_id`.
   integration tests for every endpoint.
 - **Runs anywhere:** dockerized (multi-stage build, non-root runtime).
 
+> A step-by-step account of how it was built and **why** each decision was made
+> is in [`docs/WALKTHROUGH.md`](docs/WALKTHROUGH.md).
+
 ## API
 
 Base path: `/transactions`. Bodies and responses are JSON.
