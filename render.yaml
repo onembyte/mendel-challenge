@@ -1,0 +1,15 @@
+# Render.com Blueprint — one-click public deploy of the service.
+#
+# Usage: on render.com, "New +" -> "Blueprint", connect this repo. Render reads
+# this file, builds the Dockerfile, and serves the app at a public HTTPS URL.
+# Render injects $PORT, which the app honors (see application.properties).
+#
+# Free plan note: the instance sleeps after ~15 min idle; the first request
+# after sleep cold-starts in ~30-60s, then it's fast.
+services:
+  - type: web
+    name: mendel-challenge
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /transactions/types/health-probe
