@@ -1,5 +1,9 @@
 # Testing the endpoints
 
+> **Live now:** <https://mendel-challenge.onrender.com/> — open it for the browser
+> tester, or `curl https://mendel-challenge.onrender.com/transactions/sum/10`. On the
+> free tier the first request after idle takes ~50s to wake the instance.
+
 Four ways to exercise the API, from "already done for you" to "reachable by anyone,
 anywhere". Pick the one that fits.
 
@@ -95,6 +99,9 @@ Pages can't do this (it serves static files only, not a Java server), so deploy 
 `render.yaml`, so this is a few clicks.
 
 ### Recommended: Render (Docker, free, browser-based setup)
+
+> This is already deployed at <https://mendel-challenge.onrender.com/>. The steps
+> below are how it was set up (and how to reproduce it).
 
 1. Go to <https://render.com> and sign in with GitHub.
 2. **New +** → **Blueprint** → pick the `onembyte/mendel-challenge` repo.

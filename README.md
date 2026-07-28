@@ -2,6 +2,11 @@
 
 [![CI](https://github.com/onembyte/mendel-challenge/actions/workflows/ci.yml/badge.svg)](https://github.com/onembyte/mendel-challenge/actions/workflows/ci.yml)
 
+**🌐 Live demo:** **<https://mendel-challenge.onrender.com/>** — the API plus a
+built-in browser tester, deployed from this repo's Dockerfile. On the free tier the
+instance sleeps when idle, so the **first** request may take ~50s to wake; after
+that it's fast.
+
 A RESTful service that stores transactions **in memory** and answers questions
 about them: list ids by type, and total the amount of a transaction together
 with everything transitively linked to it through `parent_id`.
@@ -16,8 +21,9 @@ with everything transitively linked to it through `parent_id`.
 > ways to test the endpoints (local, Docker, public deploy) in
 > [`docs/TESTING.md`](docs/TESTING.md).
 
-**Try it in a browser:** run the app (below) and open <http://localhost:8080/> for a
-built-in API tester — a form per endpoint plus a one-click replay of the spec example.
+**Try it in a browser:** open the [live demo](https://mendel-challenge.onrender.com/)
+(or run locally and open <http://localhost:8080/>) for a built-in API tester — a form
+per endpoint plus a one-click replay of the spec example.
 
 ## API
 
