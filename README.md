@@ -22,9 +22,11 @@ with everything attached beneath it.
   integration tests for every endpoint.
 - **Runs anywhere:** dockerized (multi-stage build, non-root runtime).
 
-**Try it in a browser:** open the [live demo](https://mendel-challenge.onrender.com/)
-(or run locally and open <http://localhost:8080/>) for a built-in API tester — a form
-per endpoint plus a one-click replay of the spec example.
+**Try it — two ways, no setup:**
+- **Browser:** open the [live demo](https://mendel-challenge.onrender.com/) (or run
+  locally and open <http://localhost:8080/>) for a built-in API tester.
+- **Terminal:** copy-paste curl commands against the live URL are in
+  [Try it with curl](#try-it-with-curl) below.
 
 ## API
 
@@ -36,19 +38,36 @@ Base path: `/transactions`. Bodies and responses are JSON.
 | `GET /transactions/types/{type}` | — | `200` `[10, 11, ...]` | Ids of all transactions of `type`, ascending. Empty array if none. |
 | `GET /transactions/sum/{id}` | — | `200` `{"sum": double}` | `id`'s amount plus all transitive descendants. |
 
-### Example (the challenge's worked example)
+### Try it with curl
+
+No UI needed — set `BASE` once and paste the block. It points at the live service by default; use
+`http://localhost:8080` to hit a local run instead. On the free tier the **first**
+request may take ~50s while the instance wakes (it's a shared in-memory instance, so
+state resets on redeploy).
 
 ```bash
-curl -X PUT localhost:8080/transactions/10 -H 'Content-Type: application/json' \
+BASE=https://mendel-challenge.onrender.com
+
+curl -X PUT $BASE/transactions/10 -H 'Content-Type: application/json' \
   -d '{"amount":5000,"type":"cars"}'                        # {"status":"ok"}
-curl -X PUT localhost:8080/transactions/11 -H 'Content-Type: application/json' \
+curl -X PUT $BASE/transactions/11 -H 'Content-Type: application/json' \
   -d '{"amount":10000,"type":"shopping","parent_id":10}'    # {"status":"ok"}
-curl -X PUT localhost:8080/transactions/12 -H 'Content-Type: application/json' \
+curl -X PUT $BASE/transactions/12 -H 'Content-Type: application/json' \
   -d '{"amount":5000,"type":"shopping","parent_id":11}'     # {"status":"ok"}
 
-curl localhost:8080/transactions/types/cars                 # [10]
-curl localhost:8080/transactions/sum/10                     # {"sum":20000.0}
-curl localhost:8080/transactions/sum/11                     # {"sum":15000.0}
+curl $BASE/transactions/types/cars                          # [10]
+curl $BASE/transactions/sum/10                              # {"sum":20000.0}
+curl $BASE/transactions/sum/11                              # {"sum":15000.0}
+```
+
+Error cases (`-i` shows the status line):
+
+```bash
+curl -i -X PUT $BASE/transactions/9 -H 'Content-Type: application/json' \
+  -d '{"amount":1,"type":"x","parent_id":777}'   # 404 — parent 777 does not exist
+curl -i -X PUT $BASE/transactions/9 -H 'Content-Type: application/json' \
+  -d '{"type":"x"}'                               # 400 — missing amount
+curl -i $BASE/transactions/sum/999999            # 404 — unknown id
 ```
 
 ### Error responses
