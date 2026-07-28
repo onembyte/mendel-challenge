@@ -11,8 +11,13 @@ with everything transitively linked to it through `parent_id`.
   integration tests for every endpoint.
 - **Runs anywhere:** dockerized (multi-stage build, non-root runtime).
 
-> A step-by-step account of how it was built and **why** each decision was made
-> is in [`docs/WALKTHROUGH.md`](docs/WALKTHROUGH.md).
+> **Docs:** how it was built and **why**, in
+> [English](docs/WALKTHROUGH.md) / [Español](docs/WALKTHROUGH.es.md) ·
+> ways to test the endpoints (local, Docker, public deploy) in
+> [`docs/TESTING.md`](docs/TESTING.md).
+
+**Try it in a browser:** run the app (below) and open <http://localhost:8080/> for a
+built-in API tester — a form per endpoint plus a one-click replay of the spec example.
 
 ## API
 
