@@ -11,15 +11,16 @@ A RESTful service that stores transactions **in memory** and answers questions
 about them: list ids by type, and total the amount of a transaction together
 with everything transitively linked to it through `parent_id`.
 
+**What it models.** A minimal transaction ledger where transactions can be linked
+into a tree via `parent_id`, so totals roll up across a branch — the shape behind
+things like an expense with its sub-expenses, or a payment with its refunds and
+fees. `types` filters the ledger by category; `sum` rolls up a transaction together
+with everything attached beneath it.
+
 - **Stack:** Spring Boot 4.1, Java 21, Maven (wrapper included). No database, no SQL.
 - **Tests:** JUnit + AssertJ unit tests for the storage core, plus real-HTTP
   integration tests for every endpoint.
 - **Runs anywhere:** dockerized (multi-stage build, non-root runtime).
-
-> **Docs:** how it was built and **why**, in
-> [English](docs/WALKTHROUGH.md) / [Español](docs/WALKTHROUGH.es.md) ·
-> ways to test the endpoints (local, Docker, public deploy) in
-> [`docs/TESTING.md`](docs/TESTING.md).
 
 **Try it in a browser:** open the [live demo](https://mendel-challenge.onrender.com/)
 (or run locally and open <http://localhost:8080/>) for a built-in API tester — a form
