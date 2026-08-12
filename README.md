@@ -2,10 +2,10 @@
 
 [![CI](https://github.com/onembyte/mendel-challenge/actions/workflows/ci.yml/badge.svg)](https://github.com/onembyte/mendel-challenge/actions/workflows/ci.yml)
 
-**🌐 Live demo:** **<https://mendel-challenge.onrender.com/>** — the API plus a
-built-in browser tester, deployed from this repo's Dockerfile. On the free tier the
-instance sleeps when idle, so the **first** request may take ~50s to wake; after
-that it's fast.
+> **🌐 Live demo — retired.** During the challenge review the service was deployed on
+> Render straight from this repo's `Dockerfile` (API + a built-in browser tester). It
+> has been intentionally taken offline now that the selection process concluded — it
+> still builds and runs locally or in Docker in seconds, see [Running it](#running-it).
 
 A RESTful service that stores transactions **in memory** and answers questions
 about them: list ids by type, and total the amount of a transaction together
@@ -22,11 +22,9 @@ with everything attached beneath it.
   integration tests for every endpoint.
 - **Runs anywhere:** dockerized (multi-stage build, non-root runtime).
 
-**Try it — two ways, no setup:**
-- **Browser:** open the [live demo](https://mendel-challenge.onrender.com/) (or run
-  locally and open <http://localhost:8080/>) for a built-in API tester.
-- **Terminal:** copy-paste curl commands against the live URL are in
-  [Try it with curl](#try-it-with-curl) below.
+**Try it — two ways:**
+- **Browser:** [run it](#running-it) and open <http://localhost:8080/> for a built-in API tester.
+- **Terminal:** copy-paste curl commands are in [Try it with curl](#try-it-with-curl) below.
 
 ## API
 
@@ -40,13 +38,12 @@ Base path: `/transactions`. Bodies and responses are JSON.
 
 ### Try it with curl
 
-No UI needed — set `BASE` once and paste the block. It points at the live service by default; use
-`http://localhost:8080` to hit a local run instead. On the free tier the **first**
-request may take ~50s while the instance wakes (it's a shared in-memory instance, so
-state resets on redeploy).
+No UI needed — [start the service](#running-it), then set `BASE` and paste the block.
+(The public demo has been retired, so this runs against a local instance; storage is
+in-memory, so state resets when the app restarts.)
 
 ```bash
-BASE=https://mendel-challenge.onrender.com
+BASE=http://localhost:8080
 
 curl -X PUT $BASE/transactions/10 -H 'Content-Type: application/json' \
   -d '{"amount":5000,"type":"cars"}'                        # {"status":"ok"}
